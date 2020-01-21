@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 
 const theme = createMuiTheme({
   typography: {
+    fontSize: 14,
     button: {
       textTransform: 'none'
     }
