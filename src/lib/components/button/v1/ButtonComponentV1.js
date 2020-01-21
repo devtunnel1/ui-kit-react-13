@@ -52,6 +52,9 @@ export function ButtonComponentV1 (props) {
         color={props.color}
         onClick={props.onClick}
         disabled={props.disabled}
+        size={props.size}
+        startIcon={props.startIcon}
+        endIcon={props.endIcon}
         disableElevation
       >
         {props.label}
