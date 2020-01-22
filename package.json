@@ -33,6 +33,7 @@
     "@storybook/addons": "^5.3.7",
     "@storybook/preset-create-react-app": "^1.5.2",
     "@storybook/react": "^5.3.7",
+    "@storybook/theming": "^5.3.8",
     "babel-preset-react-app": "^9.0.0",
     "jss": "^10.0.0-alpha.3",
     "react": "^16.8.6",
