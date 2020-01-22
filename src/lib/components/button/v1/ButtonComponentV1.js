@@ -1,3 +1,11 @@
+/**
+ * Copyright (c) AppDynamics, Inc., and its affiliates
+ * 2020
+ * All Rights Reserved
+ * THIS IS UNPUBLISHED PROPRIETARY CODE OF APPDYNAMICS, INC.
+ * The copyright notice above does not evidence any actual or intended publication of such source code
+ */
+
 import React from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
