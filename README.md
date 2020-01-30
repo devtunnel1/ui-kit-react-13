@@ -16,12 +16,12 @@ npm install --save @devtunnel/ui-kit-react-13
 ```jsx
 import React, { Component } from 'react'
 
-import { Button } from '@devtunnel/ui-kit-react-13'
+import { ButtonComponentV1 } from '@devtunnel/ui-kit-react-13'
 
 class Example extends Component {
   render () {
     return (
-      <Button label='This is a button' />
+      <ButtonComponentV1 label='This is a button' />
     )
   }
 }
