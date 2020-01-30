@@ -6,9 +6,32 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code
  */
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import SVG from 'react-inlinesvg'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+
+const reqSvgs = require.context('@appd/ui-assets/inline-images', true, /\.svg$/)
+const svgs = reqSvgs.keys().map(path => ({ path, file: reqSvgs(path) }))
+
+function getIconFile (iconName, svgs) {
+  for (const svg of svgs) {
+    const regex = RegExp(`${iconName}.svg`)
+    if (regex.test(svg.path)) return svg.file
+  }
+  return null
+}
+
+const iconStyles = {
+  height: '24px',
+  width: '24px'
+}
+
+const labelStyles = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap'
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -30,6 +53,8 @@ const theme = createMuiTheme({
         borderRadius: '3px',
         fontSize: '14px',
         fontWeight: 'normal',
+        maxWidth: '400px',
+        minWidth: '64px',
         padding: '3px 16px'
       },
       contained: {
@@ -41,32 +66,42 @@ const theme = createMuiTheme({
       containedPrimary: {
         '&:hover': {
           backgroundColor: '#9D8EFF'
-        }
+        },
+        fill: '#FFFFFF'
       },
       containedSecondary: {
         '&:hover': {
           backgroundColor: '#DBDFE2'
-        }
+        },
+        fill: '#585E67'
       }
     }
   }
 })
 
 export function ButtonComponentV1 (props) {
+  const [icon, setIcon] = useState(null)
+
+  useEffect(() => {
+    const iconFile = getIconFile(props.iconName, svgs)
+    setIcon(iconFile)
+  }, [props.iconName])
+
   return (
-    <ThemeProvider theme={theme}>
-      <Button
-        variant={props.variant}
-        color={props.color}
-        onClick={props.onClick}
-        disabled={props.disabled}
-        size={props.size}
-        startIcon={props.startIcon}
-        endIcon={props.endIcon}
-        disableElevation
-      >
-        {props.label}
-      </Button>
-    </ThemeProvider>
+    <React.Fragment>
+      <ThemeProvider theme={theme}>
+        <Button
+          variant={props.variant}
+          color={props.color}
+          onClick={props.onClick}
+          disabled={props.disabled}
+          size={props.size}
+          startIcon={icon ? <SVG src={icon} style={iconStyles} /> : null}
+          disableElevation
+        >
+          <span style={labelStyles}>{props.label}</span>
+        </Button>
+      </ThemeProvider>
+    </React.Fragment>
   )
 }

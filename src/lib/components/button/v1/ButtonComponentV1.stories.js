@@ -1,7 +1,14 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { withKnobs, text, boolean } from '@storybook/addon-knobs'
-import { ButtonComponentV1 } from '../../../../lib'
+import { withKnobs, text, boolean, select } from '@storybook/addon-knobs'
+import { getAlphabetizedKeyToValueMappingForEnum } from '@appd/common'
+import { ButtonRole } from '@appd/components'
+import { ParticleIcon } from '@appd/ui-assets'
+import { ButtonComponentV1 } from 'lib'
+
+const buttonRoleString = 'Button Role'
+const buttonClickedString = 'Button clicked'
+const iconNames = getAlphabetizedKeyToValueMappingForEnum(ParticleIcon)
 
 export default {
   title: 'Button',
@@ -14,7 +21,20 @@ export const Basic = () => (
     variant='contained'
     color='primary'
     label={text('Label', 'Click me')}
-    onClick={action('clicked')}
+    iconName={select('iconName', iconNames, ParticleIcon.Delete)}
+    buttonRole={select(
+      buttonRoleString,
+      {
+        primary: ButtonRole.Primary,
+        secondary: ButtonRole.Secondary,
+        toolbar: ButtonRole.Toolbar,
+        iconSmall: ButtonRole.IconSmall,
+        iconMedium: ButtonRole.IconMedium,
+        submit: ButtonRole.Submit
+      },
+      ButtonRole.Primary
+    )}
+    onClick={action(buttonClickedString)}
     disabled={boolean('Disabled')}
   />
 )

@@ -8,6 +8,7 @@ const App = () => (
       label='This is a particle button.'
       variant='contained'
       color='primary'
+      iconName='databaseCritical'
       onClick={() => console.log('Button clicked!')}
     />
   </div>
