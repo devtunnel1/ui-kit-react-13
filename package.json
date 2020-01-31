@@ -26,9 +26,6 @@
     "@angular/forms": "7.2.15",
     "@angular/material": "7.3.7",
     "@angular/platform-browser": "7.2.15",
-    "@appd/common": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/common/-/common-7.3.0.tgz",
-    "@appd/components": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/components/-/components-7.3.0.tgz",
-    "@appd/ui-assets": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/ui-assets/-/ui-assets-4.0.4.tgz",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
@@ -64,5 +61,9 @@
       "last 1 safari version"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@appd/common": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/common/-/common-7.3.0.tgz",
+    "@appd/components": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/components/-/components-7.3.0.tgz",
+    "@appd/ui-assets": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/ui-assets/-/ui-assets-4.0.4.tgz"
+  }
 }
