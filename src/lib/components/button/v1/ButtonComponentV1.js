@@ -8,8 +8,9 @@
 
 import React, { useState, useEffect } from 'react'
 import SVG from 'react-inlinesvg'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const reqSvgs = require.context('@appd/ui-assets/inline-images', true, /\.svg$/)
 const svgs = reqSvgs.keys().map(path => ({ path, file: reqSvgs(path) }))
@@ -32,6 +33,16 @@ const labelStyles = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap'
 }
+
+const StyledTooltip = withStyles(() => ({
+  tooltip: {
+    backgroundColor: '#19212B',
+    fontSize: '13px',
+    fontWeight: 'normal',
+    lineHeight: '14px',
+    marginTop: '4px'
+  }
+}))(Tooltip)
 
 const theme = createMuiTheme({
   typography: {
@@ -60,7 +71,8 @@ const theme = createMuiTheme({
       contained: {
         '&$disabled': {
           backgroundColor: '#F1F3F5',
-          color: '#A2A6AB'
+          color: '#A2A6AB',
+          fill: '#A2A6AB'
         }
       },
       containedPrimary: {
@@ -80,27 +92,48 @@ const theme = createMuiTheme({
 })
 
 export function ButtonComponentV1 (props) {
+  // icon
   const [icon, setIcon] = useState(null)
-
   useEffect(() => {
     const iconFile = getIconFile(props.iconName, svgs)
     setIcon(iconFile)
   }, [props.iconName])
 
+  // tooltip
+  let label = React.createRef()
+  const [openTooltip, setOpenTooltip] = useState(false)
+  const handleTooltipClose = () => setOpenTooltip(false)
+  const handleTooltipOpen = () => {
+    const { offsetWidth, scrollWidth } = label.current
+    if (offsetWidth < scrollWidth) setOpenTooltip(true)
+  }
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <Button
-          variant={props.variant}
-          color={props.color}
-          onClick={props.onClick}
-          disabled={props.disabled}
-          size={props.size}
-          startIcon={icon ? <SVG src={icon} style={iconStyles} /> : null}
-          disableElevation
+        <StyledTooltip
+          title={props.label}
+          open={openTooltip}
+          onClose={handleTooltipClose}
+          onOpen={handleTooltipOpen}
         >
-          <span style={labelStyles}>{props.label}</span>
-        </Button>
+          <span style={{
+            display: 'inline-block',
+            cursor: props.disabled ? 'not-allowed' : 'pointer'
+          }}>
+            <Button
+              variant={props.variant}
+              color={props.color}
+              onClick={props.onClick}
+              disabled={props.disabled}
+              size={props.size}
+              startIcon={icon ? <SVG src={icon} style={iconStyles} /> : null}
+              disableElevation
+            >
+              <span style={labelStyles} ref={label}>{props.label}</span>
+            </Button>
+          </span>
+        </StyledTooltip>
       </ThemeProvider>
     </React.Fragment>
   )
