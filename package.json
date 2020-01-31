@@ -45,7 +45,6 @@
     "jss": "^10.0.0-alpha.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-inlinesvg": "^1.2.0",
     "react-scripts": "^3.0.1",
     "rimraf": "^2.6.3"
   },
@@ -64,6 +63,7 @@
   "dependencies": {
     "@appd/common": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/common/-/common-7.3.0.tgz",
     "@appd/components": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/components/-/components-7.3.0.tgz",
-    "@appd/ui-assets": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/ui-assets/-/ui-assets-4.0.4.tgz"
+    "@appd/ui-assets": "https://nexus3.corp.appdynamics.com/repository/npm-host/%40appd/ui-assets/-/ui-assets-4.0.4.tgz",
+    "react-inlinesvg": "^1.2.0"
   }
 }
