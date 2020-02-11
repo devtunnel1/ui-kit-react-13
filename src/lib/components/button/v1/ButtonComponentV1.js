@@ -6,27 +6,10 @@
  * The copyright notice above does not evidence any actual or intended publication of such source code
  */
 
-import React, { useState, useEffect } from 'react'
-import SVG from 'react-inlinesvg'
+import React, { Component } from 'react'
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
-
-const reqSvgs = require.context('@appd/ui-assets/inline-images', true, /\.svg$/)
-const svgs = reqSvgs.keys().map(path => ({ path, file: reqSvgs(path) }))
-
-function getIconFile (iconName, svgs) {
-  for (const svg of svgs) {
-    const regex = RegExp(`${iconName}.svg`)
-    if (regex.test(svg.path)) return svg.file
-  }
-  return null
-}
-
-const iconStyles = {
-  height: '24px',
-  width: '24px'
-}
 
 const labelStyles = {
   overflow: 'hidden',
@@ -91,50 +74,68 @@ const theme = createMuiTheme({
   }
 })
 
-export function ButtonComponentV1 (props) {
-  // icon
-  const [icon, setIcon] = useState(null)
-  useEffect(() => {
-    const iconFile = getIconFile(props.iconName, svgs)
-    setIcon(iconFile)
-  }, [props.iconName])
+class ButtonComponentV1 extends Component {
+  constructor (props) {
+    super(props)
 
-  // tooltip
-  let label = React.createRef()
-  const [openTooltip, setOpenTooltip] = useState(false)
-  const handleTooltipClose = () => setOpenTooltip(false)
-  const handleTooltipOpen = () => {
-    const { offsetWidth, scrollWidth } = label.current
-    if (offsetWidth < scrollWidth) setOpenTooltip(true)
+    this.state = {
+      openTooltip: false
+    }
+
+    this.handleTooltipOpen = this.handleTooltipOpen.bind(this)
+    this.handleTooltipClose = this.handleTooltipClose.bind(this)
   }
 
-  return (
-    <React.Fragment>
+  handleTooltipOpen () {
+    const { offsetWidth, scrollWidth } = this.labelEl
+    if (offsetWidth < scrollWidth) {
+      this.setState({ openTooltip: true })
+    }
+  }
+
+  handleTooltipClose () {
+    this.setState({ openTooltip: false })
+  }
+
+  render () {
+    const { openTooltip } = this.state
+
+    const {
+      label,
+      variant,
+      color,
+      onClick,
+      disabled,
+      size
+    } = this.props
+
+    return (
       <ThemeProvider theme={theme}>
-        <StyledTooltip
-          title={props.label}
-          open={openTooltip}
-          onClose={handleTooltipClose}
-          onOpen={handleTooltipOpen}
-        >
-          <span style={{
-            display: 'inline-block',
-            cursor: props.disabled ? 'not-allowed' : 'pointer'
-          }}>
+        <span style={{
+          display: 'inline-block',
+          cursor: disabled ? 'not-allowed' : 'pointer'
+        }}>
+          <StyledTooltip
+            title={label}
+            open={openTooltip}
+            onClose={this.handleTooltipClose}
+            onOpen={this.handleTooltipOpen}
+          >
             <Button
-              variant={props.variant}
-              color={props.color}
-              onClick={props.onClick}
-              disabled={props.disabled}
-              size={props.size}
-              startIcon={icon ? <SVG src={icon} style={iconStyles} /> : null}
+              variant={variant}
+              color={color}
+              onClick={onClick}
+              disabled={disabled}
+              size={size}
               disableElevation
             >
-              <span style={labelStyles} ref={label}>{props.label}</span>
+              <span style={labelStyles} ref={(el) => { this.labelEl = el }}>{label}</span>
             </Button>
-          </span>
-        </StyledTooltip>
+          </StyledTooltip>
+        </span>
       </ThemeProvider>
-    </React.Fragment>
-  )
+    )
+  }
 }
+
+export { ButtonComponentV1 }
