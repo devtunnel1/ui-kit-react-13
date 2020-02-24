@@ -18,10 +18,7 @@ export default {
 
 export const Basic = () => (
   <ButtonComponentV1
-    variant='contained'
-    color='primary'
     label={text('Label', 'Click me')}
-    iconName={select('iconName', iconNames, ParticleIcon.Delete)}
     buttonRole={select(
       buttonRoleString,
       {
@@ -34,6 +31,7 @@ export const Basic = () => (
       },
       ButtonRole.Primary
     )}
+    iconName={select('iconName', iconNames, ParticleIcon.Delete)}
     onClick={action(buttonClickedString)}
     disabled={boolean('Disabled')}
   />
